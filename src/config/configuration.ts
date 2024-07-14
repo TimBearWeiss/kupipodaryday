@@ -1,6 +1,6 @@
 export default () => ({
   server: {
-    port: parseInt(process.env.PORT, 10) || 3000,
+    port: parseInt(process.env.PORT, 10) || 3001,
   },
 
   database: {
@@ -10,8 +10,8 @@ export default () => ({
     password: process.env.DB_PASSWORD || 'student',
     name: process.env.DB_NAME || 'nest_project',
   },
-  jwt: {
-    secret: process.env.JWT_SECRET || 'super_secret',
-    ttl: process.env.JWT_TTL || '30000s',
-  },
+  // jwt: {
+  //   secret: process.env.JWT_SECRET || 'super_secret',
+  //   ttl: process.env.JWT_TTL || '30000s',
+  // },
 });
