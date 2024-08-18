@@ -3,14 +3,14 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
   JoinColumn,
   ManyToOne,
   ManyToMany,
+  Column,
 } from 'typeorm';
-import { Offers } from '../../offers/entities/offers.entity';
 import { User } from '../../users/entities/user.entity';
 import { Wish } from 'src/wishes/entities/wish.entity';
+import { IsString, IsUrl, Length, MaxLength } from 'class-validator';
 
 @Entity()
 export class Wishlist {
@@ -23,10 +23,29 @@ export class Wishlist {
   @UpdateDateColumn()
   updateAt: Date;
 
+  @ManyToOne(() => User, (user) => user.wishes)
+  owner: User;
+
+  @Column({ type: 'varchar', length: 250 })
+  @IsString()
+  @Length(1, 250)
+  name: string;
+
+  @Column({ type: 'varchar', length: 1500 })
+  @IsString()
+  @MaxLength(1500)
+  description: string;
+
+  @Column({ type: 'varchar' })
+  @IsUrl()
+  image: string;
+
   @ManyToMany(() => Wish, (wish) => wish.offers)
   @JoinColumn()
   items: Wish[];
-
-  @ManyToOne(() => User, (user) => user.wishes)
-  owner: User;
 }
+
+// name — название списка. Не может быть длиннее 250 символов и короче одного;
+// description — описание подборки, строка до 1500 символов;
+// image — обложка для подборки;
+// items содержит набор ссылок на подарки

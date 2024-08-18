@@ -19,6 +19,12 @@ export class Offers {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updateAt: Date;
+
   @ManyToOne(() => User, (user) => user.offers)
   @JoinColumn()
   user: User; // содержит желающего скинуться
@@ -27,9 +33,9 @@ export class Offers {
   @JoinColumn()
   item: Wish;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column('decimal', { precision: 16, scale: 2 })
+  amount: number;
 
-  @UpdateDateColumn()
-  updateAt: Date;
+  @Column({ type: 'boolean', default: false })
+  hidden: boolean;
 }
